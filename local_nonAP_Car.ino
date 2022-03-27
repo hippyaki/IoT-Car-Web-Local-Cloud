@@ -12,6 +12,7 @@ int RightB= ; //IN4
 
 const char* ssid = " ";  // Enter SSID here
 const char* password = " ";  //Enter Password here
+const char* secret = " "; //Keep any kind of your own Secret Token - example - 'internetofthings'
 
 WebServer server(80);             
  
@@ -44,23 +45,22 @@ void setup() {
   Serial.println("WiFi connected..!");
   Serial.print("Got IP: ");  
   Serial.println(WiFi.localIP());
-  digitalWrite(2,HIGH);
+  digitalWrite(2,HIGH); //Blue LED to display connected WiFi
 
 //---------- Page Endpoints ( Main Control Room ) ----------------
 
-  server.on("/asasasasa", handle_OnConnect);
+  server.on("/" + secret, handle_OnConnect);
 
-  server.on("/asasasasa/left", left);
+  server.on("/"  + secret + "/left", left);
 
-  server.on("/asasasasa/right", right);
+  server.on("/"  + secret + "/right", right);
 
-  server.on("/asasasasa/forward", forward);
+  server.on("/"  + secret + "/forward", forward);
 
-  server.on("/asasasasa/backward", backward);
+  server.on("/"  + secret + "/backward", backward);
 
-  server.on("/asasasasa/stop", halt);
-
-  server.on("/asasasasa/open", isOpen);
+  server.on("/"  + secret + "/stop", halt);
+ 
   server.onNotFound(handle_NotFound);
 
 //---------- SERVER EXECUTION --------------

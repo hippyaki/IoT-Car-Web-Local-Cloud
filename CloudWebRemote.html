@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BOT WebRemote</title>
+        <meta charset="utf-8">
+        <script type = "text/javascript">
+            
+            // ---- For Local Connection ----
+
+            var base_url = "https://blynk.cloud/external/api/batch/update?token=";
+            const secret = "<secret_token>";
+            
+            // ------------------------------
+        
+        </script>
+        
+        <style rel="stylesheet">
+            body{
+
+    margin-top: 50px;
+    background: #0E101C;
+    font-size: 50px;
+}
+
+
+#L {
+    height:  150px;
+    width: 300px;
+
+    background-color: #3f4245;
+    border: 3px solid #00ADB5;  
+    border-radius: 3px;
+
+    transition: 0.3s ease;
+
+    line-height: 270%;
+    color: #00ADB5;
+    font-family:Itim,handwriting;
+
+}    
+#L:hover{
+    transform: scale(1.05);
+    transition: 0.3s ease;
+    background-color:#505357;
+
+}
+
+#L.on{
+    background-color: #00ADB5;
+    color: #5a5d61;
+}
+
+#F {
+    height:  150px;
+    width: 300px;
+
+    background-color: #3f4245;
+    border: 3px solid #00ADB5; 
+    border-radius: 3px;
+
+    transition: 0.3s ease;
+
+    line-height: 270%;
+    color: #00ADB5;
+    font-family:Itim,handwriting;
+
+}    
+#F:hover{
+    transform: scale(1.05);
+    transition: 0.3s ease;
+    background-color:#505357;
+
+}
+
+#F.on{
+    background-color: #00ADB5;
+    color: #5a5d61;    
+
+}
+
+#S {
+    height:  150px;
+    width: 300px;
+
+    background-color: #3f4245;
+    border: 3px solid #00ADB5;  
+    border-radius: 3px;
+
+    transition: 0.3s ease;
+
+    line-height: 270%;
+    color: #00ADB5;
+    font-family:Itim,handwriting;
+
+}    
+#S:hover{
+    transform: scale(1.05);
+    transition: 0.3s ease;
+    background-color:#505357;
+
+}
+
+#S.on{
+    background-color: #00ADB5;
+    color: #5a5d61;
+}
+
+#B {
+    height:  150px;
+    width: 300px;
+
+    background-color: #3f4245;
+    border: 3px solid #00ADB5;  
+    border-radius: 3px;
+
+    transition: 0.3s ease;
+
+    line-height: 270%;
+    color: #00ADB5;
+    font-family:Itim,handwriting;
+
+}    
+#B:hover{
+    transform: scale(1.05);
+    transition: 0.3s ease;
+    background-color:#505357;
+
+}
+
+#B.on{
+    background-color: #00ADB5;
+    color: #5a5d61;
+}
+
+
+#R {
+    height:  150px;
+    width: 300px;
+
+    background-color: #3f4245;
+    border: 3px solid #00ADB5;  
+    border-radius: 3px;
+
+    transition: 0.3s ease;
+
+    line-height: 270%;
+    color: #00ADB5;
+    font-family:Itim,handwriting;
+    
+}    
+#R:hover{
+    transform: scale(1.05);
+    transition: 0.3s ease;
+    background-color:#505357;
+
+}
+
+#R.on{
+    background-color: #00ADB5;
+    color: #5a5d61;
+}
+
+
+        </style> 
+
+
+      
+    </head>
+
+    <body>
+        <center>
+            <div id = "Control" style="display: flex;flex-direction: row;align-content: stretch;justify-content: space-around;align-items: center;">
+                <div id ="left">
+                    <div id="L" onclick="L()">Left</div>
+                </div>
+                <div id = "center">
+                    <div id="F" onclick="F()">Forward</div>
+                    <br>
+                    <div id="S" onclick="S()">Stop</div> 
+                    <br>
+                    <div id="B" onclick="B()">Backward</div> 
+                </div>  
+                <div id = "right">
+                    <div id="R" onclick="R()">Right</div>
+                </div>    
+            </div>        
+        </center>
+        
+        <script type = "text/javascript">
+          
+          var v0=0;
+          var v1=0;
+          var v2=0;
+          var v3=0;
+          var v4=0;
+            
+            function Execute(val){
+              if (val == "left"){
+                v0 = 0;
+                v1 = 0;
+                v2 = 0;
+                v3 = 0;
+                v4 = 1;
+              }
+              else if (val == "right"){
+                v0 = 0;
+                v1 = 0;
+                v2 = 0;
+                v3 = 1;
+                v4 = 0;
+              }
+              else if (val == "forward"){
+                v0 = 1;
+                v1 = 0;
+                v2 = 0;
+                v3 = 0;
+                v4 = 0;
+              }
+              else if (val == "stop"){
+                v0 = 0;
+                v1 = 0;
+                v2 = 1;
+                v3 = 0;
+                v4 = 0;
+              }
+              else if (val == "backward"){
+                v0 = 0;
+                v1 = 1;
+                v2 = 0;
+                v3 = 0;
+                v4 = 0;
+              }
+              else{
+                v0 = 0;
+                v1 = 0;
+                v2 = 0;
+                v3 = 0;
+                v4 = 0;
+              }
+              var params = "&v0=" + v0 + "&v1=" + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        //document.getElementById("javascript_response").innerHTML = "Javascript Response : "+xmlhttp.responseText;
+                        //alert(xmlhttp.responseText);
+                    }
+                };  
+                xmlhttp.open("GET", base_url + secret + params);
+                xmlhttp.send();   
+            }
+
+
+            function L(){
+
+                var L = document.getElementById('L');
+
+                if (!L.classList.contains("on")){
+
+                    Execute('left'); // executes LEFT Forward
+                  
+                    document.getElementById("L").classList.add("on");
+                    window.localStorage.setItem("L", "on");
+                    
+                    document.getElementById("F").classList.remove("on");
+                    localStorage.removeItem("F");
+                    document.getElementById("S").classList.remove("on");
+                    localStorage.removeItem("S");
+                    document.getElementById("B").classList.remove("on");
+                    localStorage.removeItem("B");
+                    document.getElementById("R").classList.remove("on");
+                    localStorage.removeItem("R");
+                }
+            }
+
+            function F(){
+
+                var F = document.getElementById('F');
+
+                if (!F.classList.contains("on")){
+
+                    Execute('forward'); // executes Forward
+                    document.getElementById("F").classList.add("on");
+                    window.localStorage.setItem("F", "on");
+                    
+                    document.getElementById("L").classList.remove("on");
+                    localStorage.removeItem("L");
+                    document.getElementById("S").classList.remove("on");
+                    localStorage.removeItem("S");
+                    document.getElementById("B").classList.remove("on");
+                    localStorage.removeItem("B");
+                    document.getElementById("R").classList.remove("on");
+                    localStorage.removeItem("R");
+                }
+            }
+
+
+            function S(){
+
+                var S = document.getElementById('S');
+
+                if (!S.classList.contains("on")){
+
+                    Execute('stop'); // executes Stop
+                    document.getElementById("S").classList.add("on");
+                    window.localStorage.setItem("S", "on");
+                    
+                    document.getElementById("F").classList.remove("on");
+                    localStorage.removeItem("F");
+                    document.getElementById("L").classList.remove("on");
+                    localStorage.removeItem("L");
+                    document.getElementById("B").classList.remove("on");
+                    localStorage.removeItem("B");
+                    document.getElementById("R").classList.remove("on");
+                    localStorage.removeItem("R");
+                }
+            }
+
+            function B(){
+
+                var B = document.getElementById('B');
+
+                if (!B.classList.contains("on")){
+
+                    Execute('backward'); // executes Backward
+                    document.getElementById("B").classList.add("on");
+                    window.localStorage.setItem("B", "on");
+                    
+                    document.getElementById("F").classList.remove("on");
+                    localStorage.removeItem("F");
+                    document.getElementById("S").classList.remove("on");
+                    localStorage.removeItem("S");
+                    document.getElementById("L").classList.remove("on");
+                    localStorage.removeItem("L");
+                    document.getElementById("R").classList.remove("on");
+                    localStorage.removeItem("R");
+                }
+            }
+
+            function R(){
+
+                var R = document.getElementById('R');
+
+                if (!R.classList.contains("on")){
+
+                    Execute('right'); // executes RIGHT Forward
+                    document.getElementById("R").classList.add("on");
+                    window.localStorage.setItem("R", "on");
+                    
+                    document.getElementById("F").classList.remove("on");
+                    localStorage.removeItem("F");
+                    document.getElementById("S").classList.remove("on");
+                    localStorage.removeItem("S");
+                    document.getElementById("B").classList.remove("on");
+                    localStorage.removeItem("B");
+                    document.getElementById("L").classList.remove("on");
+                    localStorage.removeItem("L");
+                }
+            }
+            
+            function ReadAll(){
+                if (window.localStorage.getItem('L') == 'on'){
+                    document.getElementById("L").classList.add("on"); 
+                }
+                if (window.localStorage.getItem('F') == 'on'){
+                    document.getElementById("F").classList.add("on"); 
+                }
+                if (window.localStorage.getItem('S') == 'on'){
+                    document.getElementById("S").classList.add("on"); 
+                }
+                if (window.localStorage.getItem('B') == 'on'){
+                    document.getElementById("B").classList.add("on"); 
+                }
+                if (window.localStorage.getItem('R') == 'on'){
+                    document.getElementById("R").classList.add("on"); 
+                }
+
+            }
+
+
+            ReadAll();
+
+        </script>
+            
+    </body>
+
+</html>
